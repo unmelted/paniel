@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    @@include("partials/title-meta.html", {"title": "Information"})
+    @@include('./partials/head-css.html')
+</head>
+
+@@include('./partials/body.html')
+
+<!-- Begin page -->
+<div id="app-layout">
+
+    @@include('./partials/sidebar.html')
+
+    <!-- ============================================================== -->
+    <!-- Start Page Content here -->
+    <!-- ============================================================== -->
+
+    <div class="content-page">
+        <div class="content">
+
+            <!-- Start Content-->
+            <div class="container-fluid">
+                <div class="py-3 d-flex align-items-sm-center flex-sm-row flex-column">
+                    <div class="flex-grow-1">
+                        <h4 class="fs-18 fw-semibold m-0">Error Information</h4>
+                    </div>
+                </div>
+
+                <!-- Search Bar -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Search errors..."
+                                        id="errorSearch">
+                                    <button class="btn btn-primary" type="button" id="searchButton">
+                                        <i data-feather="search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Error Table -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-centered table-nowrap mb-0" id="errorTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Error Code</th>
+                                                <th>Error Name</th>
+                                                <th>Level</th>
+                                                <th>Message</th>
+                                                <th>Action Message</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Table content will be populated by JavaScript -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- container-fluid -->
+        </div> <!-- content -->
+
+        @@include('./partials/footer.html')
+
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Page content -->
+    <!-- ============================================================== -->
+
+</div>
+<!-- END wrapper -->
+
+@@include('./partials/vendor.html')
+
+<!-- App js-->
+<script src="assets/js/app.js"></script>
+
+<!-- Custom JS for Information Page -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Initialize Feather Icons
+        feather.replace();
+
+        // Function to get level color
+        function getLevelColor(level) {
+            if (level <= 2) return 'text-primary';
+            if (level <= 4) return 'text-warning';
+            return 'text-danger';
+        }
+
+        // Function to render error table
+        function renderErrorTable(errors) {
+            const tbody = document.querySelector('#errorTable tbody');
+            tbody.innerHTML = errors.map(error => `
+                        <tr>
+                            <td>${error.code}</td>
+                            <td>${error.name}</td>
+                            <td><span class="${getLevelColor(error.level)}">${error.level}</span></td>
+                            <td>${error.message}</td>
+                            <td>${error.actionMessage}</td>
+                        </tr>
+                    `).join('');
+        }
+
+        // Search functionality
+        const searchInput = document.getElementById('errorSearch');
+        const searchButton = document.getElementById('searchButton');
+
+        function performSearch() {
+            const searchTerm = searchInput.value.toLowerCase();
+            // Here you would typically make an API call to your backend
+            // For now, we'll just log the search term
+            console.log('Searching for:', searchTerm);
+        }
+
+        searchButton.addEventListener('click', performSearch);
+        searchInput.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+    });
+</script>
+
+</body>
+
+</html>

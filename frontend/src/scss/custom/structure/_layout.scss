@@ -1,0 +1,31 @@
+// Dark mode
+[data-layout-mode="dark"] {
+    background-color: $body-bg-dark;
+    color: $body-color-dark;
+
+    .card {
+        background-color: $body-secondary-bg-dark;
+    }
+
+    .app-sidebar-menu {
+        background-color: $body-secondary-bg-dark;
+    }
+
+    .text-dark {
+        color: $body-color-dark !important;
+    }
+
+    .border {
+        border-color: $border-color-dark !important;
+    }
+
+    .bg-light {
+        background-color: $body-secondary-bg-dark !important;
+    }
+
+    .widget-first {
+        .text-dark {
+            color: $body-color-dark !important;
+        }
+    }
+}
